@@ -32,6 +32,20 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     }
   }
+  
+  var data = {      // Save and get data
+    save : function(){
+      localStorage.setItem('profiles', JSON.stringify(system.profilesList));
+    },
+    getData : function(){
+      var profiles = localStorage.getItem('profiles');
+      system.profilesList = JSON.parse(profiles);
+
+      if(system.profilesList == null){
+        system.profilesList = [];
+      }
+    }
+  }
 
   function Profile(name, carrots) {
     this.name = name;
