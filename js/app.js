@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function(){
       this.drawTable();
     },
 
-    sortArray : function(){
+    sortArray : function(){     // Sort descending profiles array
       this.profilesList.sort(function(a, b){
         return b.carrots - a.carrots
       });
@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     drawTable : function(){     // Fill table
       this.sortArray();
+      data.save();
       this.cleanTable();
       for (var i = 0; i < this.profilesList.length; i++){
         var row = this.table.insertRow();
@@ -98,6 +99,20 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   }
 
+  var data = {      // Save and get data
+    save : function(){
+      localStorage.setItem('profiles', JSON.stringify(system.profilesList));
+    },
+    getData : function(){
+      var profiles = localStorage.getItem('profiles');
+      system.profilesList = JSON.parse(profiles);
+
+      if(system.profilesList == null){
+        system.profilesList = [];
+      }
+    }
+  }
+
   function Profile(name, carrots) {     // Constructor to create new profile object
     this.name = name;
     this.carrots = carrots;
@@ -109,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   function main(){
     document.getElementById('add').addEventListener("click", add);
+    data.getData();
     system.drawTable();
   }
 
